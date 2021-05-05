@@ -13,7 +13,7 @@ export default function Input({
   sideText,
   sideHref,
   value,
-  setFunc,
+  setFunc
 }) {
   const sideClasses = "te";
 
@@ -47,6 +47,7 @@ export default function Input({
         }
         value={value} // If value is not given this will not affect anything
         onChange={(e) => (setFunc ? setFunc(e.target.value) : null)} // Same as above
+        className="border-gray-200 placeholder-gray-300 dark:bg-gray-900 dark:border-gray-900 rounded focus:outline-none focus:ring-0 focus:border-gray-300 dark:focus:border-indigo-400 focus:shadow-lg transition-shadow"
       />
 
       {error ? (
