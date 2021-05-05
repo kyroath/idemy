@@ -1,4 +1,6 @@
 import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core';
+import React from 'react';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -6,7 +8,7 @@ const useStyles = makeStyles(theme => ({
       },
     appBar: {
         display: 'flex',
-        alignItems: 'center',
+        //alignItems: 'center',
         color: 'black',
         backgroundColor : '#fff'
     }
@@ -18,7 +20,7 @@ const Navbar = (props) => {
         <div className={classes.root}>
         <AppBar position="static" className={classes.appBar}>
             <Toolbar>
-                <Typography variant="h6" noWrap color="secondary">
+                <Typography variant="h6" noWrap>
                     IDEMY
                 </Typography>
             </Toolbar>
