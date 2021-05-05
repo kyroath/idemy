@@ -29,7 +29,7 @@ const SignupComponent = (props) => {
             <Typography component="h1" variant="h5">
                 Create Your Account
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} autoComplete="off">
                 <TextField
                     variant="outlined"
                     margin="normal"

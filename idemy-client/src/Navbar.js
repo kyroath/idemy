@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core';
 import React from 'react';
-
+import Image from 'next/image';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -8,9 +8,14 @@ const useStyles = makeStyles(theme => ({
       },
     appBar: {
         display: 'flex',
-        //alignItems: 'center',
+        alignItems: 'center',
         color: 'black',
         backgroundColor : '#fff'
+    },
+    logo:{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }));
 
@@ -20,13 +25,22 @@ const Navbar = (props) => {
         <div className={classes.root}>
         <AppBar position="static" className={classes.appBar}>
             <Toolbar>
-                <Typography variant="h6" noWrap>
-                    IDEMY
-                </Typography>
+                <div className={classes.logo}>
+                    <Image
+                        src="/logo.png"
+                        width={165}
+                        height={69}
+                    />
+                </div>
             </Toolbar>
         </AppBar>
         </div>
     );
 }
-
+/*
+<Typography variant="h6" noWrap>
+                    IDEMY
+                </Typography>
+                
+*/
 export default Navbar;
