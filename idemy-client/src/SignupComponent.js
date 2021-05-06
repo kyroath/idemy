@@ -24,6 +24,7 @@ const SignupComponent = (props) => {
 
     const classes = useStyles();
 
+
     return (
         <div className={classes.paper}>
             <Typography component="h1" variant="h5">
@@ -66,6 +67,16 @@ const SignupComponent = (props) => {
                     label="Password"
                     type="password"
                     id="password"
+                />
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="confirmpassword"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirm-password"
                 />                
                 <Button
                     type="submit"
