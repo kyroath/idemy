@@ -1,9 +1,9 @@
 module.exports = {
-  images:{
-    domains: ['../public']
-  },
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
+    images: {
+        domains: ['example.com'],
+      },
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
 }
