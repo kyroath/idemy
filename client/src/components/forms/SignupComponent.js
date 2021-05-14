@@ -110,7 +110,6 @@ const SignupComponent = (props) => {
                     helperText={errors.name.length !== 0 ? errors.name : null}
                     variant="outlined"
                     margin="normal"
-                    required
                     fullWidth
                     id="first_name"
                     label="First Name"
@@ -123,7 +122,6 @@ const SignupComponent = (props) => {
                     helperText={errors.surname.length !== 0 ? errors.surname : null}
                     variant="outlined"
                     margin="normal"
-                    required
                     fullWidth
                     id="last_name"
                     label="Last Name"
@@ -136,7 +134,6 @@ const SignupComponent = (props) => {
                     helperText={errors.email.length !== 0 ? errors.email : null}
                     variant="outlined"
                     margin="normal"
-                    required
                     fullWidth
                     id="email"
                     label="Email Address"
@@ -149,7 +146,6 @@ const SignupComponent = (props) => {
                     helperText={errors.password.length !== 0 ? errors.password : null}
                     variant="outlined"
                     margin="normal"
-                    required
                     fullWidth
                     name="password"
                     label="Password"
@@ -163,7 +159,6 @@ const SignupComponent = (props) => {
                     helperText={errors.confirm.length !== 0 ? errors.confirm : null}
                     variant="outlined"
                     margin="normal"
-                    required
                     fullWidth
                     name="confirmpassword"
                     label="Confirm Password"
