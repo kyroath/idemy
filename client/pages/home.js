@@ -6,8 +6,7 @@ export default function Home(){
 
     return (
         <div>
-            <Navbar showMenu = "true">
-            </Navbar>
+            <Navbar showMenu = "true" showSearch = "true"/>
             <CourseComponent></CourseComponent>
         </div>
     )

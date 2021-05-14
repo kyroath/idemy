@@ -35,7 +35,6 @@ const LoginComponent = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setErrors(initializeErrors());
 
     const schema = yup.object().shape({
@@ -58,6 +57,10 @@ const LoginComponent = (props) => {
 
       setErrors({ ...initializeErrors(), ...temp });
     }
+
+    if (valid)
+      router.push("/home");
+
   };
 
   return (

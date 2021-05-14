@@ -1,19 +1,11 @@
 import {
-  Card,
-  CardMedia,
-  CardActionArea,
-  CardActions,
-  Typography,
-  CardContent,
   makeStyles,
-  Button,
   Container,
   Grid,
-  ButtonBase,
 } from "@material-ui/core";
 import React from "react";
 
-import CardComponent from "./components/CardComponent";
+import CardComponent from "./CardComponent";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -66,6 +58,7 @@ const CourseComponent = (props) => {
                 Math.random() * 100
               )}`}
               courseSummary={lorem}
+              isPurchased = "false"
             />
           </Grid>
         ))}

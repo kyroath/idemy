@@ -1,15 +1,14 @@
-import { AppBar, Toolbar, Typography, makeStyles, handleDrawerOpen, Button} from '@material-ui/core';
+import { AppBar, Toolbar,makeStyles} from '@material-ui/core';
 import React from 'react';
 import Image from 'next/image';
-import MenuComponent from '../src/MenuComponent';
+import MenuComponent from '../src/components/MenuComponent';
+import SearchComponent from '../src/components/SearchComponent';
+
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
       },
     appBar: {
-        //display: 'flex',
-        //alignItems: 'left',
-        //color: 'black',
         backgroundColor : '#fff',
     },
     
@@ -18,9 +17,6 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
     },
 }));
-
-
-
 
 const Navbar = (props) => {
     
@@ -37,6 +33,7 @@ const Navbar = (props) => {
                         height={69}
                     />
                 </div>
+                {(props.showSearch === "true") ? <SearchComponent></SearchComponent> : <></>}
             </Toolbar>
         </AppBar>
         </div>

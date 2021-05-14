@@ -12,6 +12,7 @@ import {
   ButtonBase,
 } from "@material-ui/core";
 import React from "react";
+//import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -46,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardComponent = ({ image, courseName, courseSummary, coursePrice }) => {
+const CardComponent = ({ image, courseName, courseSummary, coursePrice , isPurchased}) => {
+  
   const classes = useStyles();
 
   return (
@@ -66,9 +68,21 @@ const CardComponent = ({ image, courseName, courseSummary, coursePrice }) => {
         <Button size="large" color="primary">
           View
         </Button>
-        <Typography variant="h5" component="h2" className={classes.priceText}>
-          ${coursePrice}
+        {isPurchased === "false" ?
+        <Typography
+        variant="h5" 
+        component="h2" 
+        className={classes.priceText}>
+        ${coursePrice}  
         </Typography>
+        :
+        <Typography 
+        variant="h6" 
+        component="h3" 
+        className={classes.priceText}>
+        Purchased  
+        </Typography>
+        }
       </CardActions>
     </Card>
   );
