@@ -1,6 +1,6 @@
 import { Button, ToolBar, handleDrawerOpen } from '@material-ui/core';
 import Navbar from '../src/Navbar';
-import CourseComponent from '../src/CourseComponent';
+import CourseComponent from '../src/components/CourseComponent';
 
 export default function Home(){
 
