@@ -1,42 +1,67 @@
 const db = require("../db");
 const { verifyToken, generateToken } = require("../utils/jwt");
+const { getRole } = require("../utils/role");
 
-const authenticate = async (req, res, next) => {
-  let token;
-  let error = true;
+const authenticate = (type) => {
+  return async (req, res, next) => {
+    type = type.toLowerCase();
 
-  // get token from authorization header
-  if (req.headers && req.headers.authorization) {
-    const parts = req.headers.authorization.split(" ");
-    if (parts.length === 2 && parts[0] === "Bearer") {
-      token = parts[1];
-      error = false;
+    if (["admin", "creator", "user"].findIndex((e) => e === type) === -1)
+      return res.sendStatus(401);
+
+    let query = "";
+
+    switch (type) {
+      case "admin":
+        query = "SELECT * FROM admins WHERE admin_id = $1";
+        role = "admin";
+        break;
+      case "creator":
+        query = "SELECT * FROM creators WHERE creator_id = $1";
+        role = "creator";
+        break;
+      case "user":
+        query = "SELECT * FROM users WHERE user_id = $1";
+        role = "user";
+        break;
     }
-  }
 
-  // send 401 Unauthorized if no token found
-  if (error) return res.sendStatus(401);
+    let token;
+    let error = true;
 
-  const verifiedToken = verifyToken(token);
+    // get token from authorization header
+    if (req.headers && req.headers.authorization) {
+      const parts = req.headers.authorization.split(" ");
+      if (parts.length === 2 && parts[0] === "Bearer") {
+        token = parts[1];
+        error = false;
+      }
+    }
 
-  // not a valid token, send 401 Unauthorized
-  if (verifiedToken === null) return res.sendStatus(401);
+    // send 401 Unauthorized if no token found
+    if (error) return res.sendStatus(401);
 
-  // valid token, get user
-  const select_user_by_id = `SELECT * FROM users WHERE user_id = $1`;
-  const db_res = await db.query(select_user_by_id, [verifiedToken.id]);
+    const verifiedToken = verifyToken(token);
 
-  // if no user with the ID is found
-  if (db_res.rowCount === 0) return res.sendStatus(401);
+    // not a valid token, send 401 Unauthorized
+    if (verifiedToken === null) return res.sendStatus(401);
 
-  const user = db_res.rows[0];
+    // valid token, get user
+    const db_res = await db.query(query, [verifiedToken.id]);
 
-  // generate a new token
-  const jwt = generateToken({ id: user.user_id });
+    // if no user with the ID is found
+    if (db_res.rowCount === 0) return res.sendStatus(401);
 
-  req.user = user;
-  req.token = jwt;
-  next();
+    const user = db_res.rows[0];
+    user.role = await getRole(user.user_id);
+
+    // generate a new token
+    const jwt = generateToken({ id: user.user_id });
+
+    req.user = user;
+    req.token = jwt;
+    next();
+  };
 };
 
 module.exports = {

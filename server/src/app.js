@@ -1,9 +1,13 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
 
-// enable middlewares
+// enable cors
+app.use(cors());
+
+// enable decoding
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

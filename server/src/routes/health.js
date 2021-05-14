@@ -1,6 +1,6 @@
-const Router = require("express-promise-router");
+const express = require("express");
 
-const router = new Router();
+const router = express.Router();
 
 router.get("/", (req, res) => {
   res.sendStatus(200);

@@ -8,6 +8,7 @@ const { authenticate } = require("../middlewares/auth");
 
 const { validate } = require("../utils/validation");
 const { generateToken } = require("../utils/jwt");
+const { getRole } = require("../utils/role");
 
 const router = express.Router();
 
@@ -31,8 +32,8 @@ router.post("/register", async (req, res) => {
 
   // there is no problem with request body
 
-  // insert into db
-  const insert_query = `INSERT INTO users (
+  // insert user into db
+  const insert_user_query = `INSERT INTO users (
                           user_first_name,
                           user_last_name,
                           user_email,
@@ -48,7 +49,7 @@ router.post("/register", async (req, res) => {
   const hashed_password = await bcrypt.hash(values.password, 12);
 
   try {
-    const db_res = await db.query(insert_query, [
+    const db_res = await db.query(insert_user_query, [
       values.first_name,
       values.last_name,
       values.email,
@@ -58,6 +59,17 @@ router.post("/register", async (req, res) => {
 
     const user = db_res.rows[0];
     delete user.user_password;
+    user.role = "user";
+
+    // check if it's the first insert into users table
+    const count = await db.query("SELECT COUNT(*) FROM users");
+    if (parseInt(count.rows[0].count) === 1) {
+      // make this user admin
+      const insert_admin_query = "INSERT INTO admins (admin_id) VALUES ($1)";
+      await db.query(insert_admin_query, [user.user_id]);
+
+      user.role = "admin";
+    }
 
     // return object if no error
     res
@@ -100,6 +112,7 @@ router.post("/login", async (req, res) => {
       return res.sendStatus(404);
 
     delete user.user_password;
+    user.role = await getRole(user.user_id);
 
     // return object if no error
     res.send({ ...db_res.rows[0], token: generateToken({ id: user.user_id }) });
@@ -109,7 +122,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/me", authenticate, (req, res) => {
+router.get("/me", authenticate("user"), (req, res) => {
   delete req.user.user_password;
   res.send({ ...req.user, token: req.token });
 });
