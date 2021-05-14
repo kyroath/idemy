@@ -1,14 +1,14 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Navbar from '../src/Navbar';
-import { Container } from '@material-ui/core';
-import LoginComponent from '../src/LoginComponent';
-import SignupComponent from '../src/SignupComponent';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Navbar from "../src/Navbar";
+import { Container } from "@material-ui/core";
+import LoginComponent from "../src/components/forms/LoginComponent";
+import SignupComponent from "../src/components/forms/SignupComponent";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     maxWidth: 500,
@@ -21,7 +21,6 @@ export default function Login() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    
     setValue(newValue);
   };
 
@@ -45,6 +44,5 @@ export default function Login() {
         </Paper>
       </Container>
     </>
-
   );
 }
