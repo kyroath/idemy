@@ -13,11 +13,13 @@ const authenticate = (type) => {
 
     switch (type) {
       case "admin":
-        query = "SELECT * FROM admins WHERE admin_id = $1";
+        query =
+          "SELECT * FROM admins INNER JOIN users u ON u.user_id = admins.admin_id WHERE admin_id = $1";
         role = "admin";
         break;
       case "creator":
-        query = "SELECT * FROM creators WHERE creator_id = $1";
+        query =
+          "SELECT * FROM creators INNER JOIN users u ON u.user_id = creators.creator_id WHERE creator_id = $1";
         role = "creator";
         break;
       case "user":
@@ -47,10 +49,17 @@ const authenticate = (type) => {
     if (verifiedToken === null) return res.sendStatus(401);
 
     // valid token, get user
-    const db_res = await db.query(query, [verifiedToken.id]);
+    let db_res = await db.query(query, [verifiedToken.id]);
 
     // if no user with the ID is found
-    if (db_res.rowCount === 0) return res.sendStatus(401);
+    if (db_res.rowCount === 0 && type === "creator") {
+      // check if the user is admin
+      db_res = await db.query(
+        "SELECT * FROM admins INNER JOIN users u ON u.user_id = admins.admin_id WHERE admin_id = $1",
+        [verifiedToken.id]
+      );
+      if (db_res.rowCount === 0) return res.sendStatus(401);
+    } else if (db_res.rowCount === 0) return res.sendStatus(401);
 
     const user = db_res.rows[0];
     user.role = await getRole(user.user_id);

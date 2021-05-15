@@ -21,4 +21,9 @@ if (process.env.NODE_ENV === "development") {
 // mount routers
 require("./routes")(app);
 
+// add error handler
+app.use((err, req, res, next) => {
+  res.status(500).send(err);
+});
+
 module.exports = app;
