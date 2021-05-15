@@ -8,11 +8,11 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
-import { TimelineTwoTone } from "@material-ui/icons";
 import { useState } from "react";
 import MessageComponent from "../components/MessageComponent";
 import FavComponent from "./FavComponent";
 import ShopComponent from "./ShopComponent";
+import {useRouter} from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CardComponent = ({
+  courseId,
   image,
   courseName,
   courseSummary,
@@ -61,8 +62,9 @@ const CardComponent = ({
   const [messageText, setMessageText] = useState("");
 
   const timeInterval = 1000;
+  const router = useRouter();
 
-  const addFavorite = (text) => {
+  const addFavorite = () => {
     if (shop) setShopMessage(false);
     setFavorite(!favorite);
     setFavMessage(true);
@@ -73,7 +75,7 @@ const CardComponent = ({
     }, timeInterval);
   };
 
-  const addShop = (text) => {
+  const addShop = () => {
     if (favorite) setFavMessage(false);
     setShop(!shop);
     setShopMessage(true);
@@ -83,6 +85,10 @@ const CardComponent = ({
       setShopMessage(false);
     }, timeInterval);
   };
+
+  const getPage = () => {
+    router.push(courseId);
+  }
 
   const classes = useStyles();
   return (
@@ -100,7 +106,7 @@ const CardComponent = ({
           <Typography>{courseSummary}</Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Button size="large" color="primary">
+          <Button size="large" color="primary" onClick={getPage}>
             View
           </Button>
           <IconButton

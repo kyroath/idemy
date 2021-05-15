@@ -1,5 +1,5 @@
 import { DataGrid } from "@material-ui/data-grid";
-import { Button, makeStyles } from "@material-ui/core";
+import { Button, makeStyles,Typography} from "@material-ui/core";
 import { useState } from "react";
 import MessageComponent from "../components/MessageComponent";
 
@@ -13,14 +13,18 @@ const useStyles = makeStyles((theme) => ({
   cancelButton : {
     margin: theme.spacing(4, 0, 5),
     marginLeft: "2em",
+  },
+  typo: {
+    textAlign: 'right',
+    margin: theme.spacing(-10, 0, 0),
   }
 }));
 
 const columns = [
   { field: "id", headerName: "Course ID", width: 130, headerAlign: 'center', align: 'center'},
   { field: "coursename", headerName: "Course Name", flex: 0.5 },
-  { field: "creator", headerName: "Creator", flex: 0.6 },
-  { field: "price", headerName: "Price", flex: 0.1, headerAlign: 'center', align: 'center'},
+  { field: "creator", headerName: "Creator", flex: 0.5 },
+  { field: "price", headerName: "Price", flex: 0.1},
 ];
 
 const rows = [
@@ -36,6 +40,7 @@ const rows = [
 ];
 
 const BagComponent = () => {
+
   const [cancel, setCancel] = useState(false);
   const [show, setShow] = useState(false);
   const [message, setMessage] = useState("");
@@ -49,6 +54,12 @@ const BagComponent = () => {
     // Deletion of rows
     //console.log(selections.selectionModel.length);
   };
+
+  let total = 0;
+    for (let index = 0; index < rows.length; index++) {
+        total += parseFloat(rows[index].price.substr(1, rows[index].price.length - 1));
+  }
+  
 
   const showCancel = () => {
     setType("error");
@@ -68,8 +79,10 @@ const BagComponent = () => {
   }
   return (
     <div className={classes.root}>
-      <div style={{ height: 800, width: "70%", margin: "auto" }}>
+      <div style={{ width: "70%", margin: "auto" }}>
         <DataGrid
+          	
+          autoHeight
           rows={rows}
           columns={columns}
           pageSize={pageSize}
@@ -98,6 +111,7 @@ const BagComponent = () => {
         ) : (
           <></>
         )}
+        <Typography className = {classes.typo} variant = "h5">Total: ₺{total == 0 ? "0.00" : total}</Typography>
       </div>
       <MessageComponent text = {message} open = {show} type = {type} />
     </div>
