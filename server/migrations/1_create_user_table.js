@@ -1,6 +1,6 @@
 const db = require("../src/db");
 
-exports.tags = ["Create Table", "User"];
+exports.tags = ["table", "user"];
 
 exports.migrate = async (client) => {
   const create_user_table = `
