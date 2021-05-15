@@ -101,4 +101,40 @@ router.post("/creators", authenticate("user"), async (req, res) => {
   res.sendStatus(201);
 });
 
+router.get("/friends", authenticate("user"), async (req, res) => {
+  const get_user = await db.query(
+    "SELECT * FROM friends f INNER JOIN users u ON f.friend_id = u.user_id WHERE f.user_id = $1",
+    [req.user.user_id]
+  );
+
+  const get_rest = await db.query(
+    "SELECT * FROM friends f INNER JOIN users u ON f.user_id = u.user_id WHERE f.friend_id = $1",
+    [req.user.user_id]
+  );
+
+  res.send([...get_user.rows, ...get_rest.rows]);
+});
+
+router.post("/friends/:id", authenticate("user"), async (req, res) => {
+  // check
+  let check = await db.query(
+    "SELECT NULL FROM friends WHERE user_id = $1 OR friend_id = $1",
+    [req.user.user_id]
+  );
+
+  if (check.rowCount !== 0) return res.sendStatus(400);
+
+  check = await db.query("SELECT NULL FROM users WHERE user_id = $1", [
+    req.params.id,
+  ]);
+  if (check.rowCount === 0) return res.sendStatus(400);
+
+  await db.query("INSERT INTO friends (user_id, friend_id) VALUES ($1, $2)", [
+    req.user.user_id,
+    req.params.id,
+  ]);
+
+  res.sendStatus(204);
+});
+
 module.exports = router;
