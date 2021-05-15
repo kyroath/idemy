@@ -2,6 +2,7 @@ import { TextField, Typography, Button,makeStyles} from "@material-ui/core"
 import { useState } from "react";
 import { useRouter } from "next/router";
 import * as yup from "yup";
+import MessageComponent from "../MessageComponent";
 
 const useStyles = makeStyles(theme => ({
     form: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 const SignupComponent = (props) => {
 
-    const router = useRouter();
+    const [check, setCheck] = useState(false);
     const classes = useStyles();
     
     const [name, setName] = useState("");
@@ -33,6 +34,8 @@ const SignupComponent = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
+
+    const timeInterval = 2000;
 
     const initializeErrors = () => ({
         name: "",
@@ -93,10 +96,13 @@ const SignupComponent = (props) => {
 
         if (valid){
             resetValues();
-            console.log("account created");
-            //Snackbar can be added 
+            setCheck(true);
+            setTimeout(
+                function () {
+                    setCheck(false);
+                },timeInterval
+            );
         }
-        
     }
 
     return (
@@ -176,6 +182,7 @@ const SignupComponent = (props) => {
                     >SIGN UP
             </Button>
             </form>
+            <MessageComponent open = {check} text = "Account successfully created ! You can login." type = "success"/>
         </div>
     )
 }
