@@ -60,7 +60,7 @@ const CardComponent = ({
   const [shop, setShop] = useState(false);
   const [messageText, setMessageText] = useState("");
 
-  const timeInverval = 1000;
+  const timeInterval = 1000;
 
   const addFavorite = (text) => {
     if (shop) setShopMessage(false);
@@ -70,7 +70,7 @@ const CardComponent = ({
     else setMessageText(courseName + " has been removed from wishlist !");
     setTimeout(function () {
       setFavMessage(false);
-    }, timeInverval);
+    }, timeInterval);
   };
 
   const addShop = (text) => {
@@ -81,7 +81,7 @@ const CardComponent = ({
     else setMessageText(courseName + " has been removed from shop !");
     setTimeout(function () {
       setShopMessage(false);
-    }, timeInverval);
+    }, timeInterval);
   };
 
   const classes = useStyles();

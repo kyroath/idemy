@@ -11,7 +11,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import AllInboxIcon from "@material-ui/icons/AllInbox";
-import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
 import HomeIcon from "@material-ui/icons/Home";
@@ -46,10 +45,6 @@ const MenuComponent = (props) => {
   const mycourses = () => {
       router.push("/mycourses");
   }
-
-  const goWishlist = () => {
-    router.push("/wishlist");
-  };
 
   const goSettings = () => {
     router.push("/settings");
@@ -114,15 +109,6 @@ const MenuComponent = (props) => {
           <ListItemText
             classes={{ primary: classes.listItemSize}}
             primary="My Courses"
-          />
-        </ListItem>
-        <ListItem button key="wishlist" onClick={goWishlist}>
-          <ListItemIcon>
-            <PlaylistAddIcon />
-          </ListItemIcon>
-          <ListItemText
-            classes={{ primary: classes.listItemSize }}
-            primary="My Wishlist"
           />
         </ListItem>
         <ListItem button key="settings" onClick={goSettings}>

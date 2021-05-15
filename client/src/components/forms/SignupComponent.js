@@ -1,6 +1,5 @@
 import { TextField, Typography, Button,makeStyles} from "@material-ui/core"
 import { useState } from "react";
-import { useRouter } from "next/router";
 import * as yup from "yup";
 import MessageComponent from "../MessageComponent";
 
@@ -18,9 +17,6 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(4, 0, 5),
     },
-    typo: {
-        marginTop: theme.spacing(3),
-    }
 }));
 
 
