@@ -1,18 +1,21 @@
 import {
   Card,
   CardMedia,
-  CardActionArea,
   CardActions,
   Typography,
   CardContent,
   makeStyles,
   Button,
-  Container,
-  Grid,
-  ButtonBase,
+  IconButton
 } from "@material-ui/core";
-import React from "react";
-//import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import {useState} from "react";
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { red,green } from '@material-ui/core/colors';
+import MessageComponent from '../components/MessageComponent';
+import FavComponent from "./FavComponent";
+import ShopComponent from "./ShopComponent";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -47,11 +50,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardComponent = ({ image, courseName, courseSummary, coursePrice , isPurchased}) => {
-  
-  const classes = useStyles();
 
+const CardComponent = ({ image, courseName, courseSummary, coursePrice , isPurchased}) => {  
+  
+  const [favorite, setFavorite] = useState(false);
+  const [shop, setShop] = useState(false);
+
+  const addFavorite = (text) => {
+    setFavorite(!favorite);
+  }
+
+  const addShop = (text) => {
+    setShop(!shop);
+  }
+
+  const classes = useStyles();
   return (
+    <>
     <Card className={classes.card}>
       <CardMedia
         className={classes.cardMedia}
@@ -68,6 +83,8 @@ const CardComponent = ({ image, courseName, courseSummary, coursePrice , isPurch
         <Button size="large" color="primary">
           View
         </Button>
+        <IconButton onClick = {() => {addFavorite(courseName);}}><FavComponent isFavorite = {favorite}/></IconButton>
+        <IconButton onClick = {() => {addShop(courseName);}}><ShopComponent isAdded = {shop}/></IconButton>
         {isPurchased === "false" ?
         <Typography
         variant="h5" 
@@ -83,8 +100,10 @@ const CardComponent = ({ image, courseName, courseSummary, coursePrice , isPurch
         Purchased  
         </Typography>
         }
+
       </CardActions>
     </Card>
+    </>
   );
 };
 

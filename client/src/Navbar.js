@@ -1,8 +1,9 @@
-import { AppBar, Toolbar,makeStyles} from '@material-ui/core';
+import { AppBar, Toolbar,makeStyles, Typography} from '@material-ui/core';
 import React from 'react';
 import Image from 'next/image';
 import MenuComponent from '../src/components/MenuComponent';
 import SearchComponent from '../src/components/SearchComponent';
+import { blueGrey, grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -14,7 +15,11 @@ const useStyles = makeStyles(theme => ({
     
     logo:{
         margin: 'auto',
+        textAlign: 'center',
         display: 'flex',
+    },
+    text:{
+        marginLeft: '1.2em'
     },
 }));
 
@@ -26,6 +31,7 @@ const Navbar = (props) => {
         <AppBar position="static" className={classes.appBar}>
             <Toolbar>
                 {(props.showMenu === "true") ? <MenuComponent></MenuComponent> : <></>}
+                <Typography variant = "h6" color = "textPrimary" className = {classes.text}>{props.text}</Typography>
                 <div className={classes.logo}>
                     <Image
                         src="/logo.png"

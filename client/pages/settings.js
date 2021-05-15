@@ -6,10 +6,7 @@ export default function Settings(){
 
     return(
         <div>
-            <Navbar showMenu = "true"></Navbar>
-            <Typography variant = "h5">
-                Account Settings Page
-            </Typography>
+            <Navbar text = "SETTINGS" showMenu = "true"></Navbar>
         </div>
     );
 }

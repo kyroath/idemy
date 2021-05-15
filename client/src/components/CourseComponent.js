@@ -3,6 +3,7 @@ import {
   Container,
   Grid,
 } from "@material-ui/core";
+import { PinDropSharp } from "@material-ui/icons";
 import React from "react";
 
 import CardComponent from "./CardComponent";
@@ -58,7 +59,7 @@ const CourseComponent = (props) => {
                 Math.random() * 100
               )}`}
               courseSummary={lorem}
-              isPurchased = "false"
+              isPurchased = {props.isPurchased}
             />
           </Grid>
         ))}

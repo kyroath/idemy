@@ -1,14 +1,13 @@
-import { Typography } from "@material-ui/core";
 import Navbar from "../src/Navbar";
+import CourseComponent from '../src/components/CourseComponent';
+
 
 export default function Wishlist(){
 
     return (
         <div>
-            <Navbar showMenu = "true" showSearch = "true"/>
-            <Typography variant = "h5">
-                My Wishlist
-            </Typography>
+            <Navbar text = "WISHLIST" showMenu = "true" showSearch = "true"/>
+            <CourseComponent isPurchased = "false"></CourseComponent>
         </div>
     );
 }
