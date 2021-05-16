@@ -102,7 +102,7 @@ const BagComponent = () => {
           <Button
             onClick = {showCancel}
             variant="contained"
-            color="secondary.cancel_button"
+            color="primary"
             size="large"
             className={classes.cancelButton}
           >
