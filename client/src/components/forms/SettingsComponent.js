@@ -17,41 +17,33 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(4, 0, 5),
     },
+    typo: {
+        marginTop: theme.spacing(3),
+    }
 }));
 
 
-const SignupComponent = (props) => {
+const SettingsComponent = () => {
 
-    const [check, setCheck] = useState(false);
+    const [update, setUpdate] = useState(false);
+    const [name,setName] = useState("Oğulcan");
+    const [surname,setSurname] = useState("Pirim");
+    const [email,setEmail] = useState("opirim@gmail.com");
+
+
     const classes = useStyles();
-    
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirm, setConfirm] = useState("");
-
     const timeInterval = 2000;
 
     const initializeErrors = () => ({
         name: "",
         surname: "",
         email: "",
-        password: "",
-        confirm: "",
-      });
+    });
 
-    const resetValues = () => {
-        setName("");
-        setSurname("");
-        setEmail("");
-        setPassword("");
-        setConfirm("");
-    };
-    
     const [errors, setErrors] = useState(initializeErrors());
-    
+
     const handleSubmit = async (e) => {
+        
         e.preventDefault();
         setErrors(initializeErrors());
 
@@ -68,67 +60,56 @@ const SignupComponent = (props) => {
                 .string()
                 .email("Email must be a valid email")
                 .required("Email is required"),
-            password: yup
-                .string()
-                .required("Password is required"),
-            confirm: yup
-                .string()
-                .oneOf([yup.ref('password'), null], 'Passwords must match')
-                .required("Confirm Password is required")
         });
-
+    
         let valid = false;
-
+    
         try {
-            valid = await schema.validate({ name, surname, email, password, confirm}, { abortEarly: false });
-          } catch (e) {
-            const temp = {};
-            e.inner.forEach((err) => {
-              temp[err.path] = err.message;
-            });
-      
-            setErrors({ ...initializeErrors(), ...temp });
+          valid = await schema.validate({ name, surname, email }, { abortEarly: false }); 
+        } catch (e) {
+          const temp = {};
+          e.inner.forEach((err) => {
+            temp[err.path] = err.message;
+          });
+    
+          setErrors({ ...initializeErrors(), ...temp });
         }
-
+    
         if (valid){
-            resetValues();
-            setCheck(true);
-            setTimeout(
-                function () {
-                    setCheck(false);
-                },timeInterval
-            );
+            setUpdate(true);
+            setTimeout(function () {
+                setUpdate(false);
+            }, timeInterval);
         }
-    }
-
+      };
     return (
         <div className={classes.paper}>
             <Typography component="h1" variant="h5">
-                Create Your Account
+                Update Your Account
             </Typography>
             <form className={classes.form} autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
                     error={errors.name.length !== 0}
-                    helperText={errors.name.length !== 0 ? errors.name : null}
+                    helperText={errors.name.length !== 0 ? errors.name : null}                    
                     variant="outlined"
                     margin="normal"
                     fullWidth
                     id="first_name"
                     label="First Name"
                     name="firstname"
-                    value={name}
+                    defaultValue={name}
                     onChange={(e) => setName(e.target.value)}
                 />
                 <TextField
                     error={errors.surname.length !== 0}
-                    helperText={errors.surname.length !== 0 ? errors.surname : null}
+                    helperText={errors.surname.length !== 0 ? errors.surname : null}  
                     variant="outlined"
                     margin="normal"
                     fullWidth
                     id="last_name"
                     label="Last Name"
                     name="lastname"
-                    value={surname}
+                    defaultValue={surname}
                     onChange={(e) => setSurname(e.target.value)}
                 />
                 <TextField
@@ -140,47 +121,21 @@ const SignupComponent = (props) => {
                     id="email"
                     label="Email Address"
                     name="email"
-                    value={email}
+                    defaultValue={email}
                     onChange={(e) => setEmail(e.target.value)}
-                />
-                <TextField
-                    error={errors.password.length !== 0}
-                    helperText={errors.password.length !== 0 ? errors.password : null}
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <TextField
-                    error={errors.confirm.length !== 0}
-                    helperText={errors.confirm.length !== 0 ? errors.confirm : null}
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="confirmpassword"
-                    label="Confirm Password"
-                    type="password"
-                    id="confirm-password"
-                    value={confirm}
-                    onChange={(e) => setConfirm(e.target.value)}
-                />                
+                />              
                 <Button
                     type="submit"
                     variant="contained"
                     color="secondary"
                     size="large"
                     className={classes.submit}
-                    >SIGN UP
+                    >UPDATE
             </Button>
             </form>
-            <MessageComponent open = {check} text = "Account successfully created ! You can login." type = "success"/>
+            <MessageComponent open = {update} text = "Account details updated ! " type = "success"/>
         </div>
-    )
+    );
 }
 
-export default SignupComponent;
+export default SettingsComponent;

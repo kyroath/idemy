@@ -1,9 +1,11 @@
-import { AppBar, Toolbar,makeStyles, Typography} from '@material-ui/core';
+import { AppBar, Toolbar,makeStyles, Typography, IconButton} from '@material-ui/core';
 import React from 'react';
 import Image from 'next/image';
 import MenuComponent from '../src/components/MenuComponent';
 import SearchComponent from '../src/components/SearchComponent';
-import { blueGrey, grey } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { useRouter } from "next/router";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -26,6 +28,16 @@ const useStyles = makeStyles(theme => ({
 const Navbar = (props) => {
     
     const classes = useStyles();
+    const router = useRouter();
+
+    const goWishlist = () => {
+        router.push("/wishlist");
+    }
+
+    const goBag = () => {
+        router.push("/bag");
+    }
+    
     return (
         <div className={classes.root}>
         <AppBar position="static" className={classes.appBar}>
@@ -39,16 +51,12 @@ const Navbar = (props) => {
                         height={69}
                     />
                 </div>
+                {(props.showMenu === "true") ? <IconButton onClick={goWishlist}><FavoriteIcon/></IconButton> : <></>}
+                {(props.showMenu === "true") ? <IconButton onClick={goBag}><ShoppingCartIcon/></IconButton> : <></>}
                 {(props.showSearch === "true") ? <SearchComponent></SearchComponent> : <></>}
             </Toolbar>
         </AppBar>
         </div>
     );
 }
-/*
-<Typography variant="h6" noWrap>
-                    IDEMY
-                </Typography>
-                
-*/
 export default Navbar;

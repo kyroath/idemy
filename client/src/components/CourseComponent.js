@@ -54,12 +54,14 @@ const CourseComponent = (props) => {
         {cards.map((card, index) => (
           <Grid item key={card} xs={12} sm={6} md={4}>
             <CardComponent
+              courseId = {`${index + 1}`}
               courseName={`Course #${index + 1}`}
               coursePrice={`${Math.floor(Math.random() * 50) + 20}.${Math.floor(
                 Math.random() * 100
               )}`}
               courseSummary={lorem}
               isPurchased = {props.isPurchased}
+              isFavorite = {props.isFavorite}
             />
           </Grid>
         ))}

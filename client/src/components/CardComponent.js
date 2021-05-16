@@ -8,11 +8,11 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
-import { TimelineTwoTone } from "@material-ui/icons";
 import { useState } from "react";
 import MessageComponent from "../components/MessageComponent";
 import FavComponent from "./FavComponent";
 import ShopComponent from "./ShopComponent";
+import {useRouter} from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -48,21 +48,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CardComponent = ({
+  courseId,
   image,
   courseName,
   courseSummary,
   coursePrice,
   isPurchased,
+  isFavorite
 }) => {
   const [favMessage, setFavMessage] = useState(false);
   const [shopMessage, setShopMessage] = useState(false);
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(isFavorite);
   const [shop, setShop] = useState(false);
   const [messageText, setMessageText] = useState("");
 
-  const timeInverval = 1000;
+  const timeInterval = 1000;
+  const router = useRouter();
 
-  const addFavorite = (text) => {
+  const addFavorite = () => {
     if (shop) setShopMessage(false);
     setFavorite(!favorite);
     setFavMessage(true);
@@ -70,10 +73,10 @@ const CardComponent = ({
     else setMessageText(courseName + " has been removed from wishlist !");
     setTimeout(function () {
       setFavMessage(false);
-    }, timeInverval);
+    }, timeInterval);
   };
 
-  const addShop = (text) => {
+  const addShop = () => {
     if (favorite) setFavMessage(false);
     setShop(!shop);
     setShopMessage(true);
@@ -81,8 +84,12 @@ const CardComponent = ({
     else setMessageText(courseName + " has been removed from shop !");
     setTimeout(function () {
       setShopMessage(false);
-    }, timeInverval);
+    }, timeInterval);
   };
+
+  const getPage = () => {
+    router.push(courseId);
+  }
 
   const classes = useStyles();
   return (
@@ -100,16 +107,19 @@ const CardComponent = ({
           <Typography>{courseSummary}</Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Button size="large" color="primary">
+          <Button size="large" color="primary" onClick={getPage}>
             View
           </Button>
+          {isPurchased === "false" ?
           <IconButton
             onClick={() => {
               addFavorite(courseName);
             }}
           >
-            <FavComponent isFavorite={favorite} />
+           <FavComponent isFavorite={favorite} />
           </IconButton>
+          : <></>}
+          {isPurchased === "false" ?
           <IconButton
             onClick={() => {
               addShop(courseName);
@@ -117,6 +127,7 @@ const CardComponent = ({
           >
             <ShopComponent isAdded={shop} />
           </IconButton>
+          : <></>}
           {isPurchased === "false" ? (
             <Typography
               variant="h5"

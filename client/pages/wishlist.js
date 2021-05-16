@@ -7,7 +7,7 @@ export default function Wishlist(){
     return (
         <div>
             <Navbar text = "WISHLIST" showMenu = "true" showSearch = "true"/>
-            <CourseComponent isPurchased = "false"></CourseComponent>
+            <CourseComponent isPurchased = "false" isFavorite = "true"></CourseComponent>
         </div>
     );
 }

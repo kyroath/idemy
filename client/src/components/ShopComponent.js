@@ -7,10 +7,10 @@ const ShopComponent = ({isAdded}) => {
     return (
         <>
             {isAdded
-            ? 
-            <AddShoppingCartIcon style={{ color: green[500] }}/> 
-            :
+            ?
             <RemoveShoppingCartIcon/>
+            :
+            <AddShoppingCartIcon style={{ color: green[500] }}/> 
             }
         </>
     );
