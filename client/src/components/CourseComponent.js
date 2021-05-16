@@ -61,6 +61,7 @@ const CourseComponent = (props) => {
               )}`}
               courseSummary={lorem}
               isPurchased = {props.isPurchased}
+              isFavorite = {props.isFavorite}
             />
           </Grid>
         ))}

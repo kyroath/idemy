@@ -48,7 +48,7 @@ const LoginComponent = (props) => {
     let valid = false;
 
     try {
-      valid = await schema.validate({ email, password }, { abortEarly: false }); // get all the errors
+      valid = await schema.validate({ email, password }, { abortEarly: false }); 
     } catch (e) {
       const temp = {};
       e.inner.forEach((err) => {

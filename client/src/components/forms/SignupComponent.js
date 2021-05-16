@@ -80,7 +80,7 @@ const SignupComponent = (props) => {
         let valid = false;
 
         try {
-            valid = await schema.validate({ name, surname, email, password, confirm}, { abortEarly: false }); // get all the errors
+            valid = await schema.validate({ name, surname, email, password, confirm}, { abortEarly: false });
           } catch (e) {
             const temp = {};
             e.inner.forEach((err) => {

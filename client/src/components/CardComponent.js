@@ -54,10 +54,11 @@ const CardComponent = ({
   courseSummary,
   coursePrice,
   isPurchased,
+  isFavorite
 }) => {
   const [favMessage, setFavMessage] = useState(false);
   const [shopMessage, setShopMessage] = useState(false);
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(isFavorite);
   const [shop, setShop] = useState(false);
   const [messageText, setMessageText] = useState("");
 
@@ -109,13 +110,16 @@ const CardComponent = ({
           <Button size="large" color="primary" onClick={getPage}>
             View
           </Button>
+          {isPurchased === "false" ?
           <IconButton
             onClick={() => {
               addFavorite(courseName);
             }}
           >
-            <FavComponent isFavorite={favorite} />
+           <FavComponent isFavorite={favorite} />
           </IconButton>
+          : <></>}
+          {isPurchased === "false" ?
           <IconButton
             onClick={() => {
               addShop(courseName);
@@ -123,6 +127,7 @@ const CardComponent = ({
           >
             <ShopComponent isAdded={shop} />
           </IconButton>
+          : <></>}
           {isPurchased === "false" ? (
             <Typography
               variant="h5"
